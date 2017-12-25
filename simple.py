@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import japanmap as jm
 import json
 from flask import Flask, render_template
+import os
 app = Flask(__name__)
 
 prefnames = ('_', '北海道', '青森', '岩手', '宮城', '秋田', '山形', '福島', '茨城', '栃木',
@@ -81,4 +82,4 @@ def main():
 
 if __name__ == '__main__':
     #main()
-    app.run(host='0.0.0.0', port=8080, debug=False)
+    app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)), debug=False)
