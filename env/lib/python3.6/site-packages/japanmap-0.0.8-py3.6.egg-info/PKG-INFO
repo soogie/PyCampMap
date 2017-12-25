@@ -1,0 +1,42 @@
+Metadata-Version: 1.1
+Name: japanmap
+Version: 0.0.8
+Summary: `japanmap` is a package for Japanese map.
+Home-page: https://pypi.python.org/pypi/japanmap
+Author: Saito Tsutomu
+Author-email: tsutomu@kke.co.jp
+License: PSFL
+Description: `japanmap` is a package for Japanese map.
+        ::
+           import matplotlib.pyplot as plt
+           from japanmap import japanmap
+           plt.imshow(japanmap({1:'blue'}))
+        
+        Requirements
+        ------------
+        * Python 3, Numpy
+        
+        Features
+        --------
+        * nothing
+        
+        Setup
+        -----
+        ::
+        
+           $ pip install japanmap
+        
+        History
+        -------
+        0.0.1 (2016-6-7)
+        ~~~~~~~~~~~~~~~~~~
+        * first release
+        
+        
+Keywords: japanmap
+Platform: UNKNOWN
+Classifier: Development Status :: 1 - Planning
+Classifier: License :: OSI Approved :: Python Software Foundation License
+Classifier: Programming Language :: Python
+Classifier: Topic :: Software Development
+Classifier: Topic :: Scientific/Engineering

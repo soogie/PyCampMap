@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Japan Map - EXAMPLE 1</title>
+    <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="/static/jquery.japan-map.js"></script>
+    <script>
+            $(function(){
+          
+    var areas = [
+    {% for a in area %}
+    {code : {{a[0]}}, name: "{{a[1]}}", color: "{{a[2]}}", prefectures: [{{a[0]}}]},
+    {% endfor %}
+        ];
+
+            
+                $("#map-container").japanMap({
+    		    width:800,
+                        areas  : areas,
+                        selection : "area",
+                        borderLineWidth: 0.25,
+                        borderLineColor: "#cccccc",
+                        drawsBoxLine : false,
+                        movesIslands : true,
+                        showsAreaName : true,
+                        //font : "MS Mincho",
+                        fontSize : 10,
+    		            fontColor :"#483d8b",
+                        fontShadowColor : "white",
+                        //onSelect : function(data){
+    			     //       location.href = areaLinks[data.area.code];
+                       // }
+                });
+    
+            });
+    </script>
+</head>
+<body>
+<div id="map-container"></div>
+</body>
+</html>
