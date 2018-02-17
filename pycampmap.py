@@ -44,7 +44,7 @@ def main():
 @app.route('/update')
 def update():
     SPCL.update()
-    return 0
+    return 'Done' 
 
 
 if __name__ == '__main__':
