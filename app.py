@@ -27,7 +27,7 @@ area = [
 
 @app.route('/')
 def main():
-    url = 'http://dev.soogie.com:5963/api'
+    url = 'http://soogie.com:5963/api'
     res = requests.get(url)
     content = json.loads(res.text)
     

@@ -1,4 +1,4 @@
-#!/home/ubuntu/workspace/env/bin/python3.6
+#!/home/takeshi/pycampmap/env/bin/python3.6
 
 # -*- coding: utf-8 -*-
 import re
