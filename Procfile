@@ -1,1 +1,2 @@
-python pycampmap.py
+web: python pycampmap.py
+
