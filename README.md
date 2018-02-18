@@ -33,5 +33,5 @@ Connpassページの情報をもとに会場の県名と開催済みかどうか
 This app is released under the MIT License.
 
 ## history
-2018/02/17 個人サーバー上で動くバージョンを公開
-2018/02/18 IBM Bluemix上で動くようにProcfile,runtime.txtを書きました
+- 2018/02/17 個人サーバー上で動くバージョンを公開
+- 2018/02/18 IBM Bluemix上で動くようにProcfile,runtime.txtを書きました
