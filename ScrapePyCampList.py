@@ -23,7 +23,12 @@ def parse_connpass(url):
     soup = BeautifulSoup(content, 'html.parser')
     info = soup.find_all('div', class_='group_inner clearfix')
     statusinfo = soup.find_all('span', class_='label_status_event close')
-    address = info[0].select('ul')[3].select('li')[1].get_text()
+    if len(info[0].select('ul')[3].select('li'))== 3:
+        address = info[0].select('ul')[3].select('li')[1].get_text()
+    elif len(info[0].select('ul')[4].select('li'))== 3:
+        address = info[0].select('ul')[4].select('li')[1].get_text()
+    else:
+        address = 'サイトの構成が変わっている'
     if len(statusinfo)>0:
         status = 1 # 終了
     else:
