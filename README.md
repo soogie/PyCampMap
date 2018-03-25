@@ -36,3 +36,6 @@ This app is released under the MIT License.
 - 2018/02/17 個人サーバー上で動くバージョンを公開
 - 2018/02/18 IBM Bluemix上で動くようにProcfile,runtime.txtを書きました
 - 2018/03/25 Python Boot Campの開催ページのテンプレート変更に対応しました
+- 2018/03/25 cf pushで"The app upload is invalid: Symlink(s) point outside of root folder"というエラーが出るのに対処
+
+
