@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import japanmap as jm
 import json
+import csv
 from sendmailgun import sendMessage
 
 prefnames = ('_', '北海道', '青森', '岩手', '宮城', '秋田', '山形', '福島', '茨城', '栃木',
@@ -22,15 +23,16 @@ def parse_connpass(url):
     res = requests.get(url)
     content = res.content
     soup = BeautifulSoup(content, 'html.parser')
-    info = soup.find_all('div', class_='group_inner clearfix')
+    infos = soup.find_all('div', class_='group_inner clearfix')
     statusinfo = soup.find_all('span', class_='label_status_event close')
-    if len(info[0].select('ul')[3].select('li'))== 3:
-        address = info[0].select('ul')[3].select('li')[1].get_text()
-    elif len(info[0].select('ul')[4].select('li'))== 3:
-        address = info[0].select('ul')[4].select('li')[1].get_text()
-    else:
-        address = 'サイトの構成が変わっている'
-        sendMessage('parse_connpassでエラー', 'サイトの構成が変わっているようです。確認してください¥n¥n' + url)
+    address = ''
+    for info in infos[0].select('li'):
+        if '〒' in info.text:
+            address = info.get_text()
+
+    if address == '':
+        sendMessage('parse_connpassでエラー', '開催地の住所が取得できませんでした。\n\n' + url)
+
     if len(statusinfo)>0:
         status = 1 # 終了
     else:
@@ -50,19 +52,21 @@ def pref_code(address):
     start = address.find('〒')
     zip = address[start+1:start+9]
     res = requests.get('http://geoapi.heartrails.com/api/json?method=searchByPostal&postal=' + zip)
-
     try:
         prefecture = res.json()['response']['location'][0]['prefecture']
         return jm.pref[prefecture]
 
     except:
-        # 郵便番号がだめなら所在地から無理やり
-        for key, value in jm.pref.items():
-            if key in address:
-                return value
+        # 郵便番号リストをしらみつぶし
+        with open('JIGYOSYO.CSV', 'r', encoding='cp932') as f:
+            postreader = csv.reader(f)
+            for row in postreader:
+                if row[7] == zip.replace('-', ''):
+                    prefecture = row[3]
+                    return jm.pref[prefecture]
 
         # それでもだめなら
-        sendMessage('pref_codeで失敗', '郵便番号でも所在地でも都道府県が指定できませんでした。確認してください¥n¥n' + address)
+        sendMessage('pref_codeで失敗', '郵便番号で都道府県が指定できませんでした。確認してください\n\n' + address)
         return 0
 
 def parse_pycamp():
@@ -96,13 +100,14 @@ def update():
 
         if ' in ' in name:
             address, status = parse_connpass(url)
-            code = pref_code(address)
-            if code not in response: # まだなければ追加
-                response[code] = status
-            elif response[code] == 0: # すでにあっても未開催なら上書き
-                response[code] = status
-            else:
-                pass # どちらでもなければなにもしない（開催済み情報がすでにある）
+            if address != '':
+                code = pref_code(address)
+                if code not in response: # まだなければ追加
+                    response[code] = status
+                elif response[code] == 0: # すでにあっても未開催なら上書き
+                    response[code] = status
+                else:
+                    pass # どちらでもなければなにもしない（開催済み情報がすでにある）
     with open('info.dic', 'w') as f:
         f.write(json.dumps(response))
 
