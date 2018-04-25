@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import japanmap as jm
 import json
+from sendmailgun import sendMessage
 
 prefnames = ('_', '北海道', '青森', '岩手', '宮城', '秋田', '山形', '福島', '茨城', '栃木',
             '群馬', '埼玉', '千葉', '東京', '神奈川', '新潟', '富山', '石川', '福井', '山梨',
@@ -29,6 +30,7 @@ def parse_connpass(url):
         address = info[0].select('ul')[4].select('li')[1].get_text()
     else:
         address = 'サイトの構成が変わっている'
+        sendMessage('parse_connpassでエラー', 'サイトの構成が変わっているようです。確認してください¥n¥n' + url)
     if len(statusinfo)>0:
         status = 1 # 終了
     else:
@@ -60,6 +62,7 @@ def pref_code(address):
                 return value
 
         # それでもだめなら
+        sendMessage('pref_codeで失敗', '郵便番号でも所在地でも都道府県が指定できませんでした。確認してください¥n¥n' + address)
         return 0
 
 def parse_pycamp():
