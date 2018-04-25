@@ -21,4 +21,4 @@ def sendMessage(subject, message):
 
 
 if __name__ == '__main__':
-    sendMessage('TEST', 'This is a test message. -- sendmailgun.py --')
+    sendMessage('TEST MESSAGE', 'This is a test message. -- sendmailgun.py --')
