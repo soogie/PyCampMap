@@ -94,7 +94,7 @@ def update():
         url = pycamp['href']
         name = pycamp.text
 
-        if 'in' in name:
+        if ' in ' in name:
             address, status = parse_connpass(url)
             code = pref_code(address)
             if code not in response: # まだなければ追加
@@ -109,5 +109,6 @@ def update():
     return 0
 
 if __name__ == '__main__':
+    update()
     print(api())
 

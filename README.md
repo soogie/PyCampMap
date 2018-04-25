@@ -38,5 +38,6 @@ This app is released under the MIT License.
 - 2018/03/25 Python Boot Campの開催ページのテンプレート変更に対応しました
 - 2018/03/25 cf pushで"The app upload is invalid: Symlink(s) point outside of root folder"というエラーが出るのに対処
 - 2018/04/25 県名の抽出に失敗したり開催ページの解析に失敗したときに管理者にメールするようにしました
+- 2018/04/25 千葉柏の葉会場の終了判定がうまくいかないのを修正しました
 
 
