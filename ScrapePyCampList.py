@@ -48,6 +48,8 @@ def pref_code(address):
       県コード(1〜43) 
       該当する県を見つけられなかった場合は0
     '''
+    # 郵便番号部に半角スペースが入っていると以下の処理が失敗するので削除。住所部にも影響があるがこの関数としては無関係
+    address = address.replace(' ', '')
     # zip = address[1:9] # これでは甘かった
     start = address.find('〒')
     zip = address[start+1:start+9]
