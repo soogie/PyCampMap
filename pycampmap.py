@@ -69,7 +69,7 @@ def old():
             if content[str(i)] == 1:
                 area[i-1] = [i, prefnames[i], '#8888ff']
             else:
-                area[i-1] = [i, prefnames[i], '#cc00cc']
+                area[i-1] = [i, prefnames[i], '#008800']
             
     return render_template('index2.html', title='Pycamp Map(old version)', area=area)
 

@@ -33,7 +33,7 @@ def parse_connpass(url):
     if address == '':
         sendMessage('parse_connpassでエラー', '開催地の住所が取得できませんでした。\n\n' + url)
 
-    if len(statusinfo)>0:
+    if len(statusinfo)>0 and '終了' in statusinfo[1]:
         status = 1 # 終了
     else:
         status = 0 # 開催予定
