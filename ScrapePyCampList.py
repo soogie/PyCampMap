@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import japanmap as jm
 import json
 import csv
+import ast
 from sendmailgun import sendMessage
 
 prefnames = ('_', '北海道', '青森', '岩手', '宮城', '秋田', '山形', '福島', '茨城', '栃木',
@@ -25,18 +26,33 @@ def parse_connpass(url):
     soup = BeautifulSoup(content, 'html.parser')
     infos = soup.find_all('div', class_='group_inner clearfix')
     statusinfo = soup.find_all('span', class_='label_status_event close')
+    if len(statusinfo)>0 and '終了' in statusinfo[1]:
+        status = 1 # 終了
+    else:
+        status = 0 # 開催予定
+
     address = ''
     for info in infos[0].select('li'):
         if '〒' in info.text:
             address = info.get_text()
 
     if address == '':
+        # connpassのAPIをevent_idで叩いて開催地住所を取得
+        res2 = requests.get("https://connpass.com/api/v1/event/?event_id=" + url.split('/')[-2])
+        content2 = ast.literal_eval(res2.content.decode())
+        address2 = content2["events"][0]["address"]
+        # 開催地住所をGoogleで検索
+        google = requests.get("https://www.google.co.jp/search?q=" + address2)
+        content3 = google.content
+        soup3 = BeautifulSoup(content3, 'html.parser')
+        infos3 = soup3.find_all("span", class_="st") # 検索結果はだいたい同じ場所のはず
+        for info in infos3:
+            if "〒" in info.text:
+                address = info.get_text()
+                break
+
         sendMessage('parse_connpassでエラー', '開催地の住所が取得できませんでした。\n\n' + url)
 
-    if len(statusinfo)>0 and '終了' in statusinfo[1]:
-        status = 1 # 終了
-    else:
-        status = 0 # 開催予定
     return address, status
 
 
