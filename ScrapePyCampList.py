@@ -49,7 +49,7 @@ def parse_connpass(url):
         for info in infos3:
             if "〒" in info.text:
                 address = info.get_text()
-                break
+                return address, status
 
         sendMessage('parse_connpassでエラー', '開催地の住所が取得できませんでした。\n\n' + url)
 
