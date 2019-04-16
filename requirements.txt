@@ -8,14 +8,14 @@ Flask==1.0.2
 idna==2.6
 itsdangerous==0.24
 japanmap==0.0.8
-Jinja2==2.10
+Jinja2==2.10.1
 MarkupSafe==1.0
 numpy==1.13.3
 olefile==0.44
 pyparsing==2.2.0
 python-dateutil==2.6.1
 pytz==2017.3
-requests==2.18.4
+requests==2.21.0
 six==1.11.0
-urllib3==1.22
+urllib3==1.24.1
 Werkzeug==0.14.1
