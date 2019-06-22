@@ -51,6 +51,18 @@ def parse_connpass(url):
                 address = info.get_text()
                 return address, status
 
+        # 開催地住所をyahooで検索
+        yahoo = requests.get("https://search.yahoo.co.jp//search?p=" + address2)
+        content4 = yahoo.content
+        soup4 = BeautifulSoup(content4, 'html.parser')
+        infos4 = soup4.find_all("div")
+        for info in infos4:
+            if "〒" in info.text:
+                address = info.get_text()
+                return address, status
+
+
+
         sendMessage('parse_connpassでエラー', '開催地の住所が取得できませんでした。\n\n' + url)
 
     return address, status
